@@ -8,10 +8,10 @@ RUN apk add --no-cache \
 
 # arib25ライブラリのインストール
 WORKDIR /build/aribb25
-RUN wget https://github.com/stz2012/libarib25/archive/master.zip
-RUN unzip master.zip
-WORKDIR /build/aribb25/libarib25-master
-RUN cmake .
+RUN curl -fsSL https://github.com/stz2012/libarib25/tarball/master | tar -xz --strip-components=1
+RUN cmake . \
+    -DCMAKE_INSTALL_PREFIX=/usr/local \
+    -DCMAKE_INSTALL_LIBDIR=/usr/local/lib
 RUN make
 RUN make install
 
