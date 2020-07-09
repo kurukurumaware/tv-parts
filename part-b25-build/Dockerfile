@@ -3,9 +3,11 @@
 FROM kurukurumaware/alpine-build-env AS B25-build
 
 RUN apk add --no-cache ccid musl pcsc-lite-libs socat musl-dev pcsc-lite-dev
+RUN set -eux && apk upgrade --update
+RUN apk add --no-cache \
+    ccid musl pcsc-lite-libs musl-dev pcsc-lite-dev socat 
 
 # arib25ライブラリのインストール
-RUN mkdir -p /build/aribb25
 WORKDIR /build/aribb25
 RUN wget https://github.com/stz2012/libarib25/archive/master.zip
 RUN unzip master.zip
@@ -20,5 +22,4 @@ RUN extractlibrary binlist /copydir
 
 # dockerhubでビルド後必要な部分のみ利用出来るようにする
 FROM scratch
-
 COPY --from=B25-build /copydir /copydir

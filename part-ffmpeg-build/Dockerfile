@@ -9,8 +9,7 @@ ENV FFMPEG_VERSION=4.2.3 \
     PREFIX=/usr/local \
     LD_LIBRARY_PATH=/usr/lib
 
-RUN set -eux \
-    && apk update
+RUN set -eux && apk upgrade --update
 RUN apk add --no-cache \
 #    autoconf \
 #    automake \
@@ -44,7 +43,6 @@ RUN apk add --no-cache \
 RUN echo http://dl-cdn.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories && \
     apk add --no-cache fdk-aac-dev
 
-RUN mkdir -p /build/aribb24
 WORKDIR /build/aribb24
 RUN curl -fsSL https://github.com/nkoriyama/aribb24/tarball/master \
     | tar -xz --strip-components=1
@@ -53,7 +51,6 @@ RUN ./configure --prefix=/usr/local --enable-static --disable-shared
 RUN make
 RUN make install
 
-RUN mkdir -p /build/ffmpeg
 WORKDIR /build/ffmpeg
 RUN curl -fsSL http://ffmpeg.org/releases/ffmpeg-${FFMPEG_VERSION}.tar.gz \
     | tar -xz --strip-components=1
