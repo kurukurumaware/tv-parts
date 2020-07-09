@@ -11,7 +11,7 @@ WORKDIR /build/recpt1
 RUN curl -fsSL https://github.com/stz2012/recpt1/tarball/master | tar -xz --strip-components=1
 WORKDIR /build/recpt1/recpt1
 RUN ./autogen.sh
-RUN ./configure --prefix=/usr/local  --enable-b25
+RUN ./configure --prefix=/usr/local --enable-b25
 RUN make -j $(nproc)
 RUN make install
 
