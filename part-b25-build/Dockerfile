@@ -2,7 +2,6 @@
 # b25コマンドを作り出して他のDckerfileの中で利用する
 FROM kurukurumaware/alpine-build-env AS B25-build
 
-RUN apk add --no-cache ccid musl pcsc-lite-libs socat musl-dev pcsc-lite-dev
 RUN set -eux && apk upgrade --update
 RUN apk add --no-cache \
     ccid musl pcsc-lite-libs musl-dev pcsc-lite-dev socat 

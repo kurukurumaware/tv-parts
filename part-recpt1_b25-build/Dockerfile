@@ -6,6 +6,13 @@ RUN set -eux && apk upgrade --update
 RUN apk add --no-cache \
     ccid musl pcsc-lite-libs musl-dev pcsc-lite-dev
 
+# arib25ライブラリのインストール
+WORKDIR /build/aribb25
+RUN curl -fsSL https://github.com/stz2012/libarib25/tarball/master | tar -xz --strip-components=1
+RUN cmake .
+RUN make
+RUN make install
+
 # 録画コマンドインストール
 WORKDIR /build/recpt1
 RUN curl -fsSL https://github.com/stz2012/recpt1/tarball/master | tar -xz --strip-components=1
@@ -16,6 +23,7 @@ RUN make -j $(nproc)
 RUN make install
 
 WORKDIR /build
+RUN echo /usr/local/bin/b25 > binlist
 RUN echo /usr/local/bin/recpt1 >> binlist
 RUN extractlibrary binlist /copydir
 
