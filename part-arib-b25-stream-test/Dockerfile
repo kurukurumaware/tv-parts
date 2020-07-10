@@ -16,8 +16,8 @@ RUN echo /usr/local/bin/arib-b25-stream-test > binlist
 RUN extractlibrary binlist /copydir
 
 # dockerhubでビルド後必要な部分のみ利用出来るようにする
-#FROM scratch
+FROM scratch
 
-#COPY --from=arib-b25-stream-test-build /copydir /copydir
+COPY --from=arib-b25-stream-test-build /copydir /copydir
 
 SHELL ["/bin/sh","-l","-c"]
