@@ -15,9 +15,7 @@ RUN cmake . \
 RUN make
 RUN make install
 
-WORKDIR /build
-RUN echo /usr/local/bin/b25 > binlist
-RUN extractlibrary binlist /copydir
+RUN extlibcp /usr/local/bin/b25 /copydir
 
 # dockerhubでビルド後必要な部分のみ利用出来るようにする
 FROM scratch

@@ -87,9 +87,7 @@ RUN make -j $(nproc)
 RUN make install
 RUN make distclean
 
-RUN echo /usr/local/bin/ffmpeg >> binlist
-RUN echo /usr/local/bin/ffprobe >> binlist
-RUN extractlibrary binlist /copydir
+RUN extlibcp "/usr/local/bin/ffmpeg /usr/local/bin/ffprobe" /copydir
 
 # dockerhubにビルドおまかせ、生成物のみ取り出す。
 FROM scratch

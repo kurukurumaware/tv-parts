@@ -24,11 +24,12 @@ RUN ./configure --prefix=/usr/local --enable-b25
 RUN make -j $(nproc)
 RUN make install
 
-WORKDIR /build
-RUN echo /usr/local/bin/b25 > binlist
-RUN echo /usr/local/bin/recpt1 >> binlist
-RUN extractlibrary binlist /copydir
+RUN extlibcp "/usr/local/bin/b25 /usr/local/bin/recpt1" /copydir
 
 # dockerhubでビルド後必要な部分のみ利用出来るようにする
 FROM scratch
 COPY --from=Recpt1-build /copydir /copydir
+
+ENTRYPOINT [ "" ]
+SHELL ["/bin/sh","-l","-c"]
+CMD [""]

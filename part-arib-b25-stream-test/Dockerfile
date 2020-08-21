@@ -8,12 +8,10 @@ RUN apk upgrade --update
 RUN apk add bash curl make g++ pkgconf
 RUN apk add pcsc-lite pcsc-lite-libs pcsc-lite-dev
 RUN npm install arib-b25-stream-test -g --unsafe 
-RUN curl -fsSL https://raw.githubusercontent.com/kurukurumaware/DockerTools/master/extractlibrary \
-    -o /usr/local/bin/extractlibrary
-RUN chmod +x /usr/local/bin/extractlibrary
+ADD https://raw.githubusercontent.com/kurukurumaware/extlibcp/master/extlibcp /usr/local/bin
+RUN chmod +x /usr/local/bin/extlibcp
 
-RUN echo /usr/local/bin/arib-b25-stream-test > binlist
-RUN extractlibrary binlist /copydir
+RUN extlibcp /usr/local/bin/arib-b25-stream-test /copydir
 
 # dockerhubでビルド後必要な部分のみ利用出来るようにする
 FROM scratch

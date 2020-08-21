@@ -15,9 +15,7 @@ RUN ./configure --prefix=/usr/local
 RUN make -j $(nproc)
 RUN make install
 
-WORKDIR /build
-RUN echo /usr/local/bin/recpt1 >> binlist
-RUN extractlibrary binlist /copydir
+RUN extlibcp "/usr/local/bin/recpt1" /copydir
 
 # dockerhubでビルド後必要な部分のみ利用出来るようにする
 FROM scratch
