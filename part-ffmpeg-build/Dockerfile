@@ -3,7 +3,7 @@
 #
 # 使用の際には最終Dockerイメージにlibva-intel-driverのインストールが必要
 #
-FROM kurukurumaware/alpine-build-env AS Ffmpeg-build
+FROM kurukurumaware/alpine-build-env
 
 ENV FFMPEG_VERSION=4.2.3 \
     PREFIX=/usr/local \
@@ -44,7 +44,7 @@ RUN echo http://dl-cdn.alpinelinux.org/alpine/edge/community >> /etc/apk/reposit
     apk add --no-cache fdk-aac-dev
 
 WORKDIR /build/aribb24
-RUN curl -fsSL https://github.com/nkoriyama/aribb24/tarball/master \
+RUN curl -fsSL https://github.com/nkoriyama/aribb24/archive/master.tar.gz \
     | tar -xz --strip-components=1
 RUN autoreconf -fiv
 RUN ./configure --prefix=/usr/local --enable-static --disable-shared
@@ -92,4 +92,4 @@ RUN extlibcp "/usr/local/bin/ffmpeg /usr/local/bin/ffprobe" /copydir
 # dockerhubにビルドおまかせ、生成物のみ取り出す。
 FROM scratch
 
-COPY --from=Ffmpeg-build /copydir /copydir
+COPY --from=0 /copydir /copydir
